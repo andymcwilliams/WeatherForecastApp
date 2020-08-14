@@ -16,7 +16,6 @@ export const Forecast = () => {
 
   var getForecast = () => {
     setForecastLoading(true);
-
     authService.getAccessToken().then((token) => {
       fetch("api/weather/forecast/" + forecastLocation, {
         headers: !token ? {} : { Authorization: `Bearer ${token}` },
@@ -82,7 +81,9 @@ export const Forecast = () => {
 
       {forecastLoading ? (
         <div>
-          <Spinner animation="border" />
+          <div style={{ marginLeft: "50%" }}>
+            <Spinner animation="border" />
+          </div>
         </div>
       ) : forecastFetchFailedMessage ? (
         <h1>{forecastFetchFailedMessage}</h1>
