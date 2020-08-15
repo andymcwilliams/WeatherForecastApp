@@ -24,13 +24,12 @@ namespace WeatherForecastApp.Controllers
         public async Task<ActionResult<IEnumerable<WeatherForecast>>> Forecast(string location)
         {
             IEnumerable<WeatherForecast> forecasts;
-            try
+
+            forecasts = await _weatherService.GetWeatherForecast(location.ToLower());
+
+            if(forecasts == null)
             {
-                forecasts = await _weatherService.GetWeatherForecast(location.ToLower());
-            }
-            catch (ArgumentException)
-            {
-                return BadRequest($"{location} is invalid");
+                return BadRequest($"Failed to retrieve forecaset for location: {location}");
             }
 
             return Ok(forecasts);
